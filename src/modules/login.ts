@@ -1,5 +1,5 @@
 // 邮箱登录
-import crypto from 'crypto';
+import md5 from 'md5';
 import { RequestBaseConfig } from '../interface';
 import { addCookieValue } from '../utils';
 import request from '../utils/request';
@@ -8,7 +8,7 @@ export default async (query: { email: string; password: string; md5_password?: s
     query.cookie = addCookieValue('os', 'pc', query.cookie);
     const data = {
         username: query.email,
-        password: query.md5_password || crypto.createHash('md5').update(query.password).digest('hex'),
+        password: query.md5_password || md5(query.password),
         rememberLogin: 'true',
     };
     let result = await request('POST', `https://music.163.com/weapi/login`, data, {

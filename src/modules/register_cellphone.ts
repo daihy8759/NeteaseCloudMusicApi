@@ -1,5 +1,5 @@
 // 注册账号
-import crypto from 'crypto';
+import md5 from 'md5';
 import { RequestBaseConfig } from '../interface';
 import { addCookieValue } from '../utils';
 import request from '../utils/request';
@@ -16,7 +16,7 @@ export default (
     const data = {
         captcha: query.captcha,
         phone: query.phone,
-        password: crypto.createHash('md5').update(query.password).digest('hex'),
+        password: md5(query.password),
         nickname: query.nickname,
     };
     return request('POST', `https://music.163.com/api/register/cellphone`, data, {

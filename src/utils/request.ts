@@ -1,7 +1,6 @@
 import axios from 'axios';
 import http from 'http';
 import https from 'https';
-import PacProxyAgent from 'pac-proxy-agent';
 import queryString from 'querystring';
 import tunnel from 'tunnel';
 import qs from 'url';
@@ -124,8 +123,9 @@ const createRequest = (method, url, data, options): Promise<CommonResponse> => {
 
         if (options.proxy) {
             if (options.proxy.indexOf('pac') > -1) {
-                settings.httpAgent = PacProxyAgent(options.proxy);
-                settings.httpsAgent = PacProxyAgent(options.proxy);
+                // TODO: remove pac
+                // settings.httpAgent = PacProxyAgent(options.proxy);
+                // settings.httpsAgent = PacProxyAgent(options.proxy);
             } else {
                 var purl = qs.parse(options.proxy);
                 if (purl.hostname) {
