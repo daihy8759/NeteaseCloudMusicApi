@@ -1,0 +1,16 @@
+//热门话题
+import { MultiPageConfig, RequestBaseConfig } from '../interface';
+import request from '../utils/request';
+
+export default (query: MultiPageConfig & RequestBaseConfig) => {
+    const data = {
+        limit: query.limit || 20,
+        offset: query.offset || 0,
+    };
+    return request('POST', `https://music.163.com/api/act/hot`, data, {
+        crypto: 'weapi',
+        cookie: query.cookie,
+        proxy: query.proxy,
+        realIP: query.realIP,
+    });
+};
