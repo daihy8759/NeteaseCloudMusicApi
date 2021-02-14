@@ -1,6 +1,6 @@
 {
     "name": "@daihy8759/netease-cloud-music-api",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "main": "lib/index.js",
     "module": "esm/index.js",
     "license": "MIT",
@@ -8,10 +8,7 @@
         "lib/",
         "esm/"
     ],
-    "keywords": [
-        "hooks",
-        "vue3"
-    ],
+    "keywords": [],
     "author": "daihy<dai85939260@163.com>",
     "repository": {
         "type": "git",
@@ -28,7 +25,7 @@
         "prepare": "yarn build"
     },
     "dependencies": {
-        "axios": "^0.21.1",
+        "got": "^11.8.1",
         "md5": "^2.3.0",
         "music-metadata": "^7.7.0",
         "qrcode": "^1.4.4",

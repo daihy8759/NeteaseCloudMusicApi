@@ -1,7 +1,6 @@
-import axios from 'axios';
+import got, { OptionsOfJSONResponseBody } from 'got';
 import http from 'http';
 import https from 'https';
-import queryString from 'querystring';
 import tunnel from 'tunnel';
 import qs from 'url';
 import { CommonResponse } from '../interface';
@@ -108,18 +107,19 @@ const createRequest = (method, url, data, options): Promise<CommonResponse> => {
             },
             cookie: [],
         };
-        const settings = {
+        const settings: OptionsOfJSONResponseBody = {
             method: method,
-            url: url,
             headers: headers,
-            data: queryString.stringify(data),
-            httpAgent: new http.Agent({ keepAlive: true }),
-            httpsAgent: new https.Agent({ keepAlive: true }),
-            encoding: null,
-            proxy: null,
+            responseType: 'json',
+            form: data,
+            agent: {
+                http: new http.Agent({ keepAlive: true }),
+                https: new https.Agent({ keepAlive: true }),
+            },
         };
 
-        if (options.crypto === 'eapi') settings.encoding = null;
+        // TODO：
+        // if (options.crypto === 'eapi') settings.encoding = null;
 
         if (options.proxy) {
             if (options.proxy.indexOf('pac') > -1) {
@@ -135,30 +135,35 @@ const createRequest = (method, url, data, options): Promise<CommonResponse> => {
                             port: purl.port ? parseInt(purl.port) : 80,
                         },
                     });
-                    // @ts-ignore
-                    settings.httpsAgent = agent;
-                    settings.httpAgent = agent;
-                    settings.proxy = null;
+                    settings.agent = {
+                        http: agent,
+                        // @ts-ignore
+                        https: agent,
+                    };
                 } else {
                     console.error('代理配置无效,不使用代理');
                 }
             }
         }
 
-        axios(settings as any)
+        got(url, settings)
             .then((res) => {
-                const body = res.data;
-                answer.cookie = (res.headers['set-cookie'] || []).map((x) => x.replace(/\s*Domain=[^(;|$)]+;*/, ''));
+                const body = res.body;
+                answer.cookie = (res.headers['set-cookie'] || []).map((x) =>
+                    x.replace(/\s*Domain=[^(;|$)]+;*/, '')
+                ) as any;
                 try {
+                    // @ts-ignore
                     answer.body = body;
-                    answer.status = answer.body.code || res.status;
+                    answer.status = answer.body.code || res.statusCode;
                     if ([201, 302, 400, 502, 800, 801, 802, 803].indexOf(answer.body.code) > -1) {
                         // 特殊状态码
                         answer.status = 200;
                     }
                 } catch (e) {
+                    //  @ts-ignore
                     answer.body = body;
-                    answer.status = res.status;
+                    answer.status = res.statusCode;
                 }
 
                 answer.status = 100 < answer.status && answer.status < 600 ? answer.status : 400;

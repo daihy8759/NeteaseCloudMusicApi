@@ -22,7 +22,6 @@ import artist_sublist from './modules/artist_sublist';
 import artist_top_song from './modules/artist_top_song';
 import artists from './modules/artists';
 import audio_match from './modules/audio_match';
-import avatar_upload from './modules/avatar_upload';
 import banner from './modules/banner';
 import batch from './modules/batch';
 import calendar from './modules/calendar';
@@ -30,7 +29,6 @@ import captcha_sent from './modules/captcha_sent';
 import captcha_verify from './modules/captcha_verify';
 import cellphone_existence_check from './modules/cellphone_existence_check';
 import check_music from './modules/check_music';
-import cloud from './modules/cloud';
 import cloudsearch from './modules/cloudsearch';
 import comment from './modules/comment';
 import comment_album from './modules/comment_album';
@@ -118,7 +116,6 @@ import personalized_newsong from './modules/personalized_newsong';
 import personalized_privatecontent from './modules/personalized_privatecontent';
 import personalized_privatecontent_list from './modules/personalized_privatecontent_list';
 import playlist_catlist from './modules/playlist_catlist';
-import playlist_cover_update from './modules/playlist_cover_update';
 import playlist_create from './modules/playlist_create';
 import playlist_delete from './modules/playlist_delete';
 import playlist_desc_update from './modules/playlist_desc_update';
@@ -241,7 +238,6 @@ const NeteaseCloudMusicApi = {
     artist_top_song,
     artists,
     audio_match,
-    avatar_upload,
     banner,
     batch,
     calendar,
@@ -249,7 +245,6 @@ const NeteaseCloudMusicApi = {
     captcha_verify,
     cellphone_existence_check,
     check_music,
-    cloud,
     cloudsearch,
     comment,
     comment_album,
@@ -337,7 +332,6 @@ const NeteaseCloudMusicApi = {
     personalized_privatecontent,
     personalized_privatecontent_list,
     playlist_catlist,
-    playlist_cover_update,
     playlist_create,
     playlist_delete,
     playlist_desc_update,
