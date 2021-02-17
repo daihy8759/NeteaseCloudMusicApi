@@ -1,5 +1,6 @@
 export interface CommonResponse extends Response {
     body: any;
+    url: string;
     cookie?: string;
 }
 

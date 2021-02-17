@@ -90,6 +90,7 @@ import login_cellphone from './modules/login_cellphone';
 import login_qr_check from './modules/login_qr_check';
 import login_qr_create from './modules/login_qr_create';
 import login_qr_key from './modules/login_qr_key';
+import login_qrcode_generate from './modules/login_qrcode_generate';
 import login_refresh from './modules/login_refresh';
 import login_status from './modules/login_status';
 import logout from './modules/logout';
@@ -306,6 +307,7 @@ const NeteaseCloudMusicApi = {
     login_qr_check,
     login_qr_create,
     login_qr_key,
+    login_qrcode_generate,
     login_refresh,
     login_status,
     logout,

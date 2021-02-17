@@ -1,4 +1,4 @@
-import got, { OptionsOfJSONResponseBody } from 'got';
+import got, { Method, OptionsOfJSONResponseBody } from 'got';
 import http from 'http';
 import https from 'https';
 import tunnel from 'tunnel';
@@ -41,13 +41,18 @@ const chooseUserAgent = (ua = '') => {
         ? realUserAgentList[Math.floor(Math.random() * realUserAgentList.length)]
         : ua;
 };
-const createRequest = (method, url, data, options): Promise<CommonResponse> => {
+const createRequest = (method: Method, url: string, data, options): Promise<CommonResponse> => {
     return new Promise((resolve, reject) => {
         let headers = { 'User-Agent': chooseUserAgent(options.ua) };
-        if (method.toUpperCase() === 'POST') headers['Content-Type'] = 'application/x-www-form-urlencoded';
-        if (url.includes('music.163.com')) headers['Referer'] = 'https://music.163.com';
-        if (options.realIP) headers['X-Real-IP'] = options.realIP;
-        // headers['X-Real-IP'] = '118.88.88.88'
+        if (method.toUpperCase() === 'POST') {
+            headers['Content-Type'] = 'application/x-www-form-urlencoded';
+        }
+        if (url.includes('music.163.com')) {
+            headers['Referer'] = 'https://music.163.com';
+        }
+        if (options.realIP) {
+            headers['X-Real-IP'] = options.realIP;
+        }
         if (typeof options.cookie === 'object')
             headers['Cookie'] = Object.keys(options.cookie)
                 .map((key) => encodeURIComponent(key) + '=' + encodeURIComponent(options.cookie[key]))
@@ -105,18 +110,27 @@ const createRequest = (method, url, data, options): Promise<CommonResponse> => {
                 code: 0,
                 msg: null,
             },
+            url: '',
             cookie: [],
         };
+
         const settings: OptionsOfJSONResponseBody = {
             method: method,
             headers: headers,
-            responseType: 'json',
             form: data,
             agent: {
                 http: new http.Agent({ keepAlive: true }),
                 https: new https.Agent({ keepAlive: true }),
             },
         };
+
+        if (method === 'GET') {
+            delete settings.form;
+            if (data) {
+                // @ts-ignore
+                settings.searchParams = new URLSearchParams(Object.entries(data));
+            }
+        }
 
         // TODO：
         // if (options.crypto === 'eapi') settings.encoding = null;
@@ -155,6 +169,7 @@ const createRequest = (method, url, data, options): Promise<CommonResponse> => {
                 try {
                     // @ts-ignore
                     answer.body = body;
+                    answer.url = res.url;
                     answer.status = answer.body.code || res.statusCode;
                     if ([201, 302, 400, 502, 800, 801, 802, 803].indexOf(answer.body.code) > -1) {
                         // 特殊状态码
