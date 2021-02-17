@@ -1,6 +1,6 @@
 {
     "name": "@daihy8759/netease-cloud-music-api",
-    "version": "1.0.2",
+    "version": "1.0.3-beta.1",
     "main": "lib/index.js",
     "module": "esm/index.js",
     "license": "MIT",

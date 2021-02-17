@@ -117,6 +117,7 @@ const createRequest = (method: Method, url: string, data, options): Promise<Comm
         const settings: OptionsOfJSONResponseBody = {
             method: method,
             headers: headers,
+            responseType: 'json',
             form: data,
             agent: {
                 http: new http.Agent({ keepAlive: true }),
@@ -125,6 +126,7 @@ const createRequest = (method: Method, url: string, data, options): Promise<Comm
         };
 
         if (method === 'GET') {
+            delete settings.responseType;
             delete settings.form;
             if (data) {
                 // @ts-ignore
