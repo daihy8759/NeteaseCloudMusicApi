@@ -48,8 +48,8 @@ export const enum SubAction {
 }
 
 export const enum SubActionLike {
-    sub = 'like',
-    unsub = 'unlike',
+    like = 'like',
+    unlike = 'unlike',
 }
 
 export const enum SubActionSubscribe {
