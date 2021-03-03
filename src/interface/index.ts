@@ -42,25 +42,13 @@ export const enum AlbumSongsaleboardAlbumType {
     single = 1,
 }
 
-export const enum SubAction {
-    sub = 'sub',
-    unsub = 'unsub',
-}
+export type SubAction = 'sub' | 'unsub';
 
-export const enum SubActionLike {
-    like = 'like',
-    unlike = 'unlike',
-}
+export type SubActionLike = 'like' | 'unlike';
 
-export const enum SubActionSubscribe {
-    sub = 'subscribe',
-    unsub = 'unsubscribe',
-}
+export type SubActionSubscribe = 'subscribe' | 'unsubscribe';
 
-export const enum SubActionFollow {
-    sub = 'follow',
-    unsub = 'delfollow',
-}
+export type SubActionFollow = 'follow' | 'delfollow';
 
 export const enum ArtistArea {
     all = '-1',
